@@ -1,7 +1,10 @@
 package com.leo.study.executor;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import com.leo.study.juc.MyThreadFactory;
+
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author chao.li@quvideo.com
@@ -24,21 +27,4 @@ public class ThreadPoolTest {
         threadPoolExecutor.shutdown();
     }
 
-    public static class MyThreadFactory implements ThreadFactory {
-
-        private final String namePrefix;
-        private final AtomicInteger nextId = new AtomicInteger(1);
-
-        public MyThreadFactory(String group) {
-            namePrefix = "From MyThreadFactory's " + group + " -Worker-";
-        }
-
-        @Override
-        public Thread newThread(Runnable r) {
-            String name = namePrefix + nextId.getAndIncrement();
-            Thread thread = new Thread(null, r, name, 0);
-            thread.setDaemon(false);
-            return thread;
-        }
-    }
 }
